@@ -82,7 +82,9 @@ extension TaskListViewController {
         let circle = task.isComplete ? "circle.fill": "circle"
         let imageConfig = UIImage.SymbolConfiguration(textStyle: .title1)
         let image = UIImage.init(systemName: circle, withConfiguration: imageConfig)
-        let btn = UIButton.init()
+        let btn = TaskDoneButton.init()
+        btn.id = task.id
+        btn.addTarget(self, action: #selector(didPressDone), for: .touchUpInside)
         btn.setImage(image, for: .normal)
         
         return .init(
@@ -109,4 +111,12 @@ extension TaskListViewController {
     
 }
 
+extension TaskListViewController {
+    
+    @objc func didPressDone(_ sender: TaskDoneButton) {
+        if let id = sender.id {
+            complete(with: id)
+        }
+    }
+    
 }
