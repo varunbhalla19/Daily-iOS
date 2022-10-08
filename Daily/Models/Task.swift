@@ -7,11 +7,19 @@
 
 import Foundation
 
-struct Task {
+struct Task: Identifiable {
     var title: String
     var dueDate: Date
     var notes: String? = nil
     var isComplete: Bool = false
+    var id: String = UUID.init().uuidString
+}
+
+extension Array where Element == Task {
+    func indexForTask(with id: Task.ID) -> Array.Index {
+        guard let index = firstIndex(where: {  $0.id == id }) else { fatalError() }
+        return index
+    }
 }
 
 #if DEBUG
