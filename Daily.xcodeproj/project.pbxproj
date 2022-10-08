@@ -14,6 +14,7 @@
 		D5853C3628EF472C0041F674 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5853C3528EF472C0041F674 /* Assets.xcassets */; };
 		D5853C3928EF472C0041F674 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5853C3728EF472C0041F674 /* LaunchScreen.storyboard */; };
 		D5853C4228EF51380041F674 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5853C4128EF51380041F674 /* Task.swift */; };
+		D5994E9928F14C88006145D9 /* Date+Daily.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5994E9828F14C88006145D9 /* Date+Daily.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		D5853C3828EF472C0041F674 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5853C3A28EF472C0041F674 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5853C4128EF51380041F674 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		D5994E9828F14C88006145D9 /* Date+Daily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Daily.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				D5853C4128EF51380041F674 /* Task.swift */,
+				D5994E9828F14C88006145D9 /* Date+Daily.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5994E9928F14C88006145D9 /* Date+Daily.swift in Sources */,
 				D5853C4228EF51380041F674 /* Task.swift in Sources */,
 				D5853C3128EF472A0041F674 /* TaskListViewController.swift in Sources */,
 				D5853C2D28EF472A0041F674 /* AppDelegate.swift in Sources */,
