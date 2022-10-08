@@ -11,6 +11,8 @@ class TaskListViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    lazy var tasks: [Task] = Task.testData
+    
     var dataSource: DataSource!
     
     override func viewDidLoad() {
@@ -24,18 +26,14 @@ class TaskListViewController: UIViewController {
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
         })
         
-        var snapShot = SnapShot.init()
-        snapShot.appendSections([0])
-        snapShot.appendItems(Task.testData.map({ $0.title }))
-        dataSource.apply(snapShot, animatingDifferences: true)
-        
+        updateSnapshot()
         collectionView.dataSource = dataSource
     }
 
     private func listLayout() -> UICollectionViewLayout {
         var layout = UICollectionLayoutListConfiguration.init(appearance: .grouped)
         layout.backgroundColor = .clear
-        layout.showsSeparators = false
+//        layout.showsSeparators = false
         return UICollectionViewCompositionalLayout.list(using: layout)
     }
     
@@ -45,13 +43,13 @@ class TaskListViewController: UIViewController {
 extension TaskListViewController {
     
     
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, String>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, Task.ID>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Int, Task.ID>
 
     func cellRegistrationHandler(cell: UICollectionViewListCell,
-                                 indexPath: IndexPath, itemIdentifier: String) {
+                                 indexPath: IndexPath, itemIdentifier: Task.ID) {
         var config = cell.defaultContentConfiguration()
-        let task = Task.testData[indexPath.item]
+        let task = task(for: itemIdentifier)
         config.text = task.title
         config.secondaryText = task.dueDate.dateTimeString
         config.secondaryTextProperties.font = .preferredFont(forTextStyle: .caption1)
@@ -69,6 +67,16 @@ extension TaskListViewController {
         cell.backgroundConfiguration = backgroundConfig
     }
     
+    func updateSnapshot(with ids: [Task.ID] = []){
+        var snapShot = SnapShot.init()
+        snapShot.appendSections([0])
+        snapShot.appendItems(tasks.map({ $0.id }))
+        if !ids.isEmpty {
+            snapShot.reloadItems(ids)
+        }
+        dataSource.apply(snapShot, animatingDifferences: true)
+    }
+    
     func doneButtonConfig(for task: Task) -> UICellAccessory.CustomViewConfiguration {
         
         let circle = task.isComplete ? "circle.fill": "circle"
@@ -83,4 +91,22 @@ extension TaskListViewController {
         )
     }
     
+    func task(for id: Task.ID) -> Task {
+        tasks[tasks.indexForTask(with: id)]
+    }
+    
+    func update(_ task: Task, with id: Task.ID) {
+        let taskIndex = tasks.indexForTask(with: id)
+        tasks[taskIndex] = task
+        updateSnapshot(with: [id])
+    }
+    
+    func complete(with id: Task.ID) {
+        var currentTask = task(for: id)
+        currentTask.isComplete.toggle()
+        update(currentTask, with: id)
+    }
+    
+}
+
 }
