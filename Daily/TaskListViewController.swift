@@ -61,10 +61,20 @@ extension TaskListViewController {
             .customView(configuration: doneButtonConfig),
             .disclosureIndicator(displayed: .always)
         ]
+        cell.accessibilityCustomActions = [doneButtonAccesibilityAction(for: task)]
+        cell.accessibilityValue = task.isComplete ? NSLocalizedString("Completed", comment: "Task is completed") : NSLocalizedString("Not Completed", comment: "Task is not completed")
         
         var backgroundConfig = UIBackgroundConfiguration.listGroupedCell()
         backgroundConfig.backgroundColor = .systemGray6
         cell.backgroundConfiguration = backgroundConfig
+    }
+    
+    private func doneButtonAccesibilityAction(for task: Task) -> UIAccessibilityCustomAction {
+        let name = NSLocalizedString("Toggle Completion", comment: "Complete Task accessibility action.")
+        return .init(name: name, actionHandler: { [weak self] action in
+            self?.complete(with: task.id)
+            return true
+        })
     }
     
     func updateSnapshot(with ids: [Task.ID] = []){
